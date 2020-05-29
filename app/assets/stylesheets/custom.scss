@@ -4,7 +4,7 @@
 /* universal */
 
 body {
-  padding-top: 60px;
+  padding-top: 50px;
    background-color:#FFFFCC; 
 }
 
@@ -36,6 +36,7 @@ h1 {
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
+  margin-top:80px;
 }
 
 h2 {
@@ -68,7 +69,7 @@ p {
 }
 
 #logo:hover {
-  color: #fff;
+  color: pink;
   text-decoration: none;
 }
 
@@ -95,10 +96,51 @@ p {
     color: white;
 }    
 
+
+#navbar-inverse .navbar-nav > li > a :hover {
+  color: pink;
+  text-decoration: none;
+}
+
+
+
 .container .jumbotron, .container-fluid .jumbotron{
    background-color:#FFFFCC; 
 }    
 
 .navbar-inverse{
-   background-color:#0033FF;   
-}    
+   background-color:#0033FF;  
+   border-color: deeppink;
+}   
+
+
+/* debug */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+  color: deeppink;
+   background-color:white; 
+}
+
+/* error_messages */
+
+#error_explanation {
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .has-error;
+  .form-control {
+    color: $state-danger-text;
+  }
+}
