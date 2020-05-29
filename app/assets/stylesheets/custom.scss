@@ -4,8 +4,7 @@
 /* universal */
 
 body {
-  padding-top: 50px;
-   background-color:#FFFFCC; 
+  padding-top: 60px;
 }
 
 section {
@@ -31,12 +30,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-family:'Homemade Apple', cursive;
   font-size: 3em;
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
-  margin-top:80px;
 }
 
 h2 {
@@ -49,7 +46,6 @@ h2 {
 }
 
 p {
-  font-family:'Homemade Apple', cursive; 
   font-size: 1.1em;
   line-height: 1.7em;
 }
@@ -57,11 +53,10 @@ p {
 /* header */
 
 #logo {
-  font-family:'Homemade Apple', cursive;
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
-  color: white;
+  color: #fff;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
@@ -69,50 +64,9 @@ p {
 }
 
 #logo:hover {
-  color: pink;
+  color: #fff;
   text-decoration: none;
 }
-
-.btn-primary {
-    font-family:'Homemade Apple', cursive;
-    color: #fff;
-    background-color:aqua;
-    border-color: aqua;
-}    
-
-.btn-primary:hover {
-  color: pink;
-   border-color: aqua;
-   background-color:white;
-  text-decoration: none;
-}    
-
-.jumbotron {
-    color: aqua;
-} 
-
-.navbar-inverse .navbar-nav > li > a {
-    font-family:'Homemade Apple', cursive;
-    color: white;
-}    
-
-
-#navbar-inverse .navbar-nav > li > a :hover {
-  color: pink;
-  text-decoration: none;
-}
-
-
-
-.container .jumbotron, .container-fluid .jumbotron{
-   background-color:#FFFFCC; 
-}    
-
-.navbar-inverse{
-   background-color:#0033FF;  
-   border-color: deeppink;
-}   
-
 
 /* debug */
 
@@ -124,8 +78,6 @@ p {
   -moz-box-sizing:    border-box;
   -webkit-box-sizing: border-box;
   box-sizing:         border-box;
-  color: deeppink;
-   background-color:white; 
 }
 
 /* error_messages */
