@@ -2,6 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
 /* ログインフォーム */
 
 .label-login {
@@ -10,4 +11,12 @@
 
 .btn-login {
   margin-top: 10px;
+}
+
+.checkbox-login {
+  width: auto;
+  margin-left: 25px;
+  span {
+    font-weight: normal;
+  }
 }
