@@ -1,6 +1,11 @@
 <% provide(:title, "Top") %>
 <div class="center jumbotron">
-  <h1>勤怠管理システム</h1>
-  <p>このアプリケーションでは、登録されたユーザーの勤怠情報を閲覧・登録・編集することができます。</p>
+  <div class ="at">Attendance management system</div>
+  
+  <p>This application allows you to view, register, and edit attendance information of registered users.</p>
+   <% if logged_in? %>
+ <div class=" log ">&#x2728;You are logged in&#x2728;</div>
+   <% else %>
   <%= link_to "Sign up", signup_path, class: "btn btn-lg btn-primary" %>
+   <% end %>
 </div>

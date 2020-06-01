@@ -46,6 +46,7 @@ h2 {
 }
 
 p {
+  font-family:'Homemade Apple', cursive;
   font-size: 1.1em;
   line-height: 1.7em;
 }
@@ -56,7 +57,7 @@ p {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
-  color: #fff;
+  color:red;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
@@ -64,14 +65,80 @@ p {
 }
 
 #logo:hover {
-  color: #fff;
+  color: white;
   text-decoration: none;
 }
+
+/* cusutom-color */
+
+.at{
+  font-family:'Homemade Apple', cursive;
+  font-size: 4em;
+}
+
+.log{
+  font-family:'Homemade Apple', cursive;
+  color: pink;
+  background-color:white;
+  font-size: 2em;
+}
+
+.btn-primary{
+  color: pink;
+  background-color:white;
+}
+
+.btn-primary:hover {
+  color: pink;
+   border-color: aqua;
+   background-color:white;
+  text-decoration: none;
+}    
+
+.jumbotron {
+    color: aqua;
+} 
+
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
+}    
+
+
+.navbar-inverse .navbar-nav > li > a :hover {
+  color: pink;
+  text-decoration: none;
+}
+
+
+
+.container .jumbotron, .container-fluid .jumbotron{
+   background-color:white; 
+}    
+
+.navbar-inverse{
+   background-color:#0033FF;  
+   border-color: deeppink;
+}   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* debug */
 
 .debug_dump {
+  color:deeppink;
   clear: both;
   float: left;
   width: 100%;
