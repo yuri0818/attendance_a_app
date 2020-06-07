@@ -101,6 +101,7 @@ p {
 
 .navbar-inverse .navbar-nav > li > a {
     color: white;
+    background-color:navy; 
 }    
 
 
@@ -116,7 +117,7 @@ p {
 }    
 
 .navbar-inverse{
-   background-color:#0033FF;  
+   background-color: navy;  
    border-color: deeppink;
 }   
 
@@ -165,8 +166,9 @@ p {
   }
 }
 
-/* モーダルウインドウの位置調整 */
+/*Overtime application */
 
-.modal-dialog-center {
-  padding-top: 10%;
-}
+.user.name{
+  color: deeppink;
+}             
+     

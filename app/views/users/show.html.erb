@@ -1,5 +1,6 @@
 <% provide(:title, @user.name) %>
 <div>
+  
   <table class="table table-bordered table-condensed user-table">
     <tr>
       <td>【<%= l(@first_day, format: :middle) %>】勤怠管理表</td>
@@ -19,9 +20,18 @@
 
 <div class="btn-users-show">
   <%= link_to "⇦ 前月へ", user_path(date: @first_day.prev_month), class: "btn btn-info" %>
-  <%= link_to "1ヶ月の勤怠編集へ", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-success" %>
+  <%= link_to "1ヶ月の勤怠編集へ", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-form" %>
   <%= link_to "次月へ ⇨", user_path(date: @first_day.next_month), class: "btn btn-info" %>
 </div>
+
+
+
+
+
+
+
+
+
 
 <div>
   <table class="table table-bordered table-condensed table-hover" id="table-attendances">
@@ -57,10 +67,8 @@
      
     </thead>
     <tbody>
+<% @attendances.each do |day| %>
 
-   
- <% @attendances.each do |day| %>
- 
  　<% 
     css_class = 
     case $days_of_the_week[day.worked_on.wday]
@@ -70,21 +78,29 @@
       'text-danger'
     end
   %>
+  
+ 
+ 
+ 
+ 
+ 
+ 
  
  
   <tr>
-    <td></td>
+    <td class="center">
+    <%= link_to "残業申請",attendances_overtime_application_user_path(@user, day: day) , remote: true,class:"btn-btn-from" %>
+    </td>
     
     <td><%= l(day.worked_on, format: :short) %></td>
     
     <td class="<%= css_class %>"><%= $days_of_the_week[day.worked_on.wday] %></td>
    
-    
-    
-    
+     
     
     <td><%= format_hour(day.started_at) if day.started_at.present? %></td>
     <td><%= format_min(day.started_at) if day.started_at.present? %></td>
+    
     <td>
       <% if btn_text = attendance_state(day) && day.started_at.blank? %>
         <%= link_to "出勤登録", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
@@ -135,3 +151,16 @@
     </tfoot> 
   </table>
 </div>
+
+  <div class = "pull right">
+    <table class="table table-bordered table-condensed ">
+      <td>
+        承認 <br>
+        <%= link_to "申請",class: "btn btn-block btn primary" %>
+        
+      </td>
+    </table>
+  </div>
+<!--モーダルウインドウ表示-->
+<div id="overtime-application" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+

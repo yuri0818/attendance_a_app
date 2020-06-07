@@ -55,3 +55,72 @@
   }  
 }
 
+/* モーダルウインドウの位置調整 */
+
+.modal-dialog-center {
+  padding-top: 10%;
+}
+
+/* 基本情報編集モーダルウインドウ */
+
+.label-overtime-application {
+  margin-top: 5px;
+}
+
+.btn-overtime-application {
+  margin: 15px 0;
+  width: 30%;
+}
+
+/* 残業申請ボタン */
+/* cusutom-color */
+.btn-btn-from{
+  background: aqua; /* 背景色 */
+  color: #fff; /* 文字色 */
+  padding: 5px 5px; /* 上下の余白、左右の余白 */
+  text-decoration: none; /* デフォルトで入るリンクの下線を消す */
+  border-radius: 200px; /* 角を丸くする */
+}
+
+
+.btn-btn-from:hover {
+   color:blue;
+}  
+
+.modal-title{
+  color:navy;
+}
+
+
+
+.btn-btn-primary{
+  font-family:'Homemade Apple', cursive;
+  color:deepskyblue;
+}
+
+/* ユーザー情報テーブル */
+
+.user-table {
+  vertical-align: middle;
+  text-align: center;
+}
+
+/*Overtime application..modal.user.name s*/
+
+h1 {
+    color: navy;
+}
+
+
+
+.a:hover{
+  color:aqua;
+}
+
+ 
+.alert{
+  font-size: 4em;
+    text-align: center;
+   font-family:'Homemade Apple', cursive;
+  color:aqua;
+}
