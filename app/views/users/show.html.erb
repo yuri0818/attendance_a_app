@@ -24,10 +24,11 @@
   <%= link_to "次月へ ⇨", user_path(date: @first_day.next_month), class: "btn btn-info" %>
 </div>
 
-
-
-
-
+<td class="center">
+    <%= link_to "残業申請",(@user) , remote: true,class:"btn-btn-from" %>
+    <%= link_to "残業申請",(@user) , remote: true,class:"btn-btn-from" %>
+    <%= link_to "残業申請",(@user) , remote: true,class:"btn-btn-from" %>
+    </td>
 
 
 
@@ -164,3 +165,9 @@
 <!--モーダルウインドウ表示-->
 <div id="overtime-application" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
+<!--モーダルウインドウ表示-->
+<div id="edit-overtime-request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="approval-monthly-report" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="approval-monthly-edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="approval-overtime" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="approved-log" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
