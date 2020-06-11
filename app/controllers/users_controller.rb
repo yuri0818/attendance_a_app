@@ -15,6 +15,7 @@ class UsersController < ApplicationController
      @last_day = @first_day.end_of_month
   end
 
+
   def new
     @user = User.new
   end
@@ -59,6 +60,11 @@ class UsersController < ApplicationController
     end
     redirect_to users_url
   end
+
+  def users_admin_index
+  end
+
+
 
   private
 
