@@ -13,8 +13,7 @@ class UsersController < ApplicationController
      @worked_sum = @attendances.where.not(started_at: nil).count
      @first_day = Date.current.beginning_of_month
      @last_day = @first_day.end_of_month
-  end
-
+   end
 
   def new
     @user = User.new
@@ -60,11 +59,12 @@ class UsersController < ApplicationController
     end
     redirect_to users_url
   end
-
-  def users_admin_index
+    
+       # 「Ajax:」と表示されている部分を更新する処理
+  def ajax_update
+    # topページにある「data(入力フォーム)」のパラメーターを@textに代入
+    @text = params[:data]
   end
-
-
 
   private
 

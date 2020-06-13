@@ -3,8 +3,19 @@
   
   <table class="table table-bordered table-condensed user-table">
     <tr>
-      <td>【<%= l(@first_day, format: :middle) %>】勤怠管理表</td>
-      <td>指定勤務時間：<%= format_basic_info(@user.work_time) %></td>
+      <td> <%= link_to "⇦ 前月へ", user_path(date: @first_day.prev_month), class: "btn btn-info" %>
+         【<%= l(@first_day, format: :middle) %>】時間管理表
+           <%= link_to "次月へ ⇨", user_path(date: @first_day.next_month), class: "btn btn-info" %>
+      </td>
+      <td>
+        <div>
+          指定勤務開始時間 ：<%= format_basic_info(@user.work_time) %>
+          <br>
+          指定勤務終了時間：<%= format_basic_info(@user.work_time) %>　
+        </div>
+       </td>
+          
+  
       <td>基本時間：<%= format_basic_info(@user.basic_time) %></td>
       <td>月初日：<%= l(@first_day, format: :short) %></td>
     </tr>
@@ -18,18 +29,15 @@
   </table>
 </div>
 
+  
+
 <div class="btn-users-show">
-  <%= link_to "⇦ 前月へ", user_path(date: @first_day.prev_month), class: "btn btn-info" %>
-  <%= link_to "1ヶ月の勤怠編集へ", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-form" %>
-  <%= link_to "次月へ ⇨", user_path(date: @first_day.next_month), class: "btn btn-info" %>
+  
+  <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>
+  <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
+  <%= link_to "勤怠ログ", "", class: "btn btn-primary" %>
+  
 </div>
-
-<td class="center">
-    <%= link_to "残業申請",(@user) , remote: true,class:"btn-btn-from" %>
-    <%= link_to "残業申請",(@user) , remote: true,class:"btn-btn-from" %>
-    <%= link_to "残業申請",(@user) , remote: true,class:"btn-btn-from" %>
-    </td>
-
 
 
 
