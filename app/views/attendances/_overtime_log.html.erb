@@ -1,0 +1,62 @@
+<% provide(:class_text, 'overtime_log') %>
+<% provide(:button_text, 'update') %>
+
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+     
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+     
+      <h1 class="modal-title">Overtime log</h1>
+    </div>
+    
+     <h1 class= user.name ><%= @user.name %></h1>
+    
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          
+
+     <%= form_with(model: @attendance, url: attendances_overtime_log_update_user_path( @user), local: true, method: :patch) do |f| %>
+     <%= render 'shared/error_messages', object: @attendance %>
+
+       <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+ 
+       
+           <th>日付</th>
+           <th>曜日</th>
+      　    <th>翌日</th>
+      　    <th>終了予定時間</th>
+           <th>業務処理内容</th>
+           <th>指示者確認印</th>
+        </tr>
+          <tr>
+          
+           <td><%= l(@attendance.worked_on, format: :short) %></td>
+          
+           <td><%= $days_of_the_week[@attendance.worked_on.wday] %></td>
+       
+           <td><%= f.check_box :tomorrow, id: "remember_me" %></td>
+           
+           <td><%= f.time_field :scheduled_end_time, class: "form-control" %></td>
+           
+           <td><%= f.text_field :business_contents, class: "form-control" %></td>
+           
+         <td><%= f.select :bass, [["選択してください"],["上長A"],["上長B"]]%></td>
+        
+         </tr>
+       </table>
+            <div class="center">
+              <%= f.submit yield(:button_text), class: "btn btn-primary btn-#{yield(:class_text)}" %>
+              <button type="button" class="btn btn-default btn-<%= yield(:class_text) %>" data-dismiss="modal">
+              CANCEL
+              </button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

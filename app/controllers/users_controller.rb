@@ -13,7 +13,15 @@ class UsersController < ApplicationController
      @worked_sum = @attendances.where.not(started_at: nil).count
      @first_day = Date.current.beginning_of_month
      @last_day = @first_day.end_of_month
-   end
+      respond_to do |format|
+        format.html do
+            #html用の処理を書く
+        end 
+        format.csv do
+           send_data render_to_string, filename: "勤怠A.csv", type: :csv #csv用の処理を書く
+        end
+    end
+  end
 
   def new
     @user = User.new
@@ -60,11 +68,7 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
     
-       # 「Ajax:」と表示されている部分を更新する処理
-  def ajax_update
-    # topページにある「data(入力フォーム)」のパラメーターを@textに代入
-    @text = params[:data]
-  end
+
 
   private
 
