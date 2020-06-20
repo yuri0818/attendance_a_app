@@ -19,32 +19,35 @@
         <div class="col-md-6 col-md-offset-3">
           
 
-     <%= form_with(model: @attendance, url: attendances_overtime_log_update_user_path( @user), local: true, method: :patch) do |f| %>
+     <%= form_with(model: @attendance, url: attendances_overtime_log_update_user_path(@user), local: true, method: :patch) do |f| %>
      <%= render 'shared/error_messages', object: @attendance %>
 
        <table class="table table-bordered table-condensed table-hover" id="table-attendances">
  
        
            <th>日付</th>
-           <th>曜日</th>
-      　    <th>翌日</th>
-      　    <th>終了予定時間</th>
-           <th>業務処理内容</th>
-           <th>指示者確認印</th>
+           <th>変更前出社時間</th>
+      　    <th>変更前退社時間</th>
+      　    <th>変更後出社時間</th>
+           <th>変更後出社時間</th>
+           <th>指示者</th>
+           <th>承認者</th>
         </tr>
           <tr>
           
            <td><%= l(@attendance.worked_on, format: :short) %></td>
           
-           <td><%= $days_of_the_week[@attendance.worked_on.wday] %></td>
+           <td></td>
        
-           <td><%= f.check_box :tomorrow, id: "remember_me" %></td>
+           <td></td>
            
-           <td><%= f.time_field :scheduled_end_time, class: "form-control" %></td>
+           <td></td>
            
-           <td><%= f.text_field :business_contents, class: "form-control" %></td>
+           <td></td>
            
-         <td><%= f.select :bass, [["選択してください"],["上長A"],["上長B"]]%></td>
+       　　  <td></td>
+         
+      　　   <td></td>
         
          </tr>
        </table>

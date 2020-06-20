@@ -83,31 +83,40 @@ p {
   font-size: 2em;
 }
 
+/* cusutom-color */
+/* user_show 勤怠ログ　勤怠編集　CSV  */
 .btn-primary{
   color: pink;
+   border-color: aqua;
   background-color:white;
 }
 
 .btn-primary:hover {
   color: pink;
    border-color: aqua;
-   background-color:white;
-  text-decoration: none;
+   background-color:deeppink;
 }    
 
 .jumbotron {
     color: aqua;
 } 
 
-.navbar-inverse .navbar-nav > li > a {
-    color: white;
-    background-color:navy; 
-}    
 
 
 .navbar-inverse .navbar-nav > li > a :hover {
   color: pink;
+   color:#a23089;
   text-decoration: none;
+}
+
+.navbar-inverse .navbar-nav > .open > a, 
+.navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+      color: pink;
+     background-color:navy; 
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color:white;
 }
 
 
@@ -116,25 +125,10 @@ p {
    background-color:white; 
 }    
 
-.navbar-inverse{
-   background-color: navy;  
-   border-color: deeppink;
-}   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.navbar-inverse {
+    background-color: navy;
+    border-color:red;
+} 
 
 /* debug */
 

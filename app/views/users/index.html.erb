@@ -1,44 +1,62 @@
 <% provide(:title, 'All Users') %>
-<h1>ユーザー一覧</h1>
+<% provide(:button_text, 'EDIT') %>
+<h1>USER INDEX</h1>
 
-<div class="col-md-10 col-md-offset-1">
-  <table class="table table-condensed table-hover" id="table-users">
-    <thead>
-      <tr>
-        <th><%= User.human_attribute_name :name %></th>
-        <th class="center"><%= User.human_attribute_name :department %></th>
-        <% if current_user.admin? %>
-          <th class="center"><%= User.human_attribute_name :basic_time %></th>
-          <th class="center"><%= User.human_attribute_name :work_time %></th>
-        <% end %>
-        <th></th>
-      </tr>
-    </thead>
+ <% if flash[:notice] %>
+  <div class="alert alert-info" role="alert"><%= flash[:notice] %></div>
+ <% end %>
 
-    <% @users.each do |user| %>
-      <tr>
-        <td>
-          <% if current_user.admin? %>
-            <%= link_to user.name, user %>
-          <% else %>
+
+ <div>
+  <%= form_tag users_path, method: :post, multipart: true do |f| %>
+    <div class="search_item">
+      <%= text_field_tag 'filename',"", id: "filename", disabled: true %>
+      <%= file_field_tag 'emails_file', id: "file_input", style: "display: none;", onchange: "file_selected($(this));" %>
+      <%= button_tag 'File select', class: %i(btn-primary csv_input_btn), type: 'button', onclick: "$('#file_input').click();" %>
+    </div>
+    
+    <div>
+      <%= link_to "CSV", users_path(format: :csv), class: "btn-circle-fishy" %>
+    </div>
+  <% end %>
+ </div>
+
+
+ <script type="text/javascript">
+  function file_selected(file_field){
+    var filename = $(file_field)[0].files[0].name;
+    $("#filename").val(filename);
+  }
+ </script>
+
+
+
+
+ <div class="col-md-10 col-md-offset-1">
+　<table class="table table-condensed table-hover" id="table-users">
+ 　 
+  　　<tr>
+        <% @users.each do |user| %>
+      　<tr>
+       　 <td>
             <%= user.name %>
+          　 <% if current_user.admin? && !current_user?(user) %>
+            
+             <%= link_to "削除", user, method: :delete,
+              data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger" %>
+          <button type ="button" class = "btn btn-primary" data-toggle="collapse" data-target="#<%= user.id %>">編集</button>
+          <div id = "<%= user.id %>" class = "collapse" >
+           <%= render partial: 'formA', locals: {user: user} %>
+          </div>
           <% end %>
-        </td>
-        <td class="center"><%= user.department.present? ? user.department : "未所属" %></td>
-        <% if current_user.admin? %>
-          <td class="center"><%= format_basic_info(user.basic_time) %></td>
-          <td class="center"><%= format_basic_info(user.work_time) %></td>
-        <% end %>
-        <td class="center">
-          <% if current_user.admin? && !current_user?(user) %>
-             <%= link_to "基本情報編集", edit_basic_info_user_path(user),class: "btn btn-success" %>
-            <%= link_to "削除", user, method: :delete,
-                data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger" %>
-          <% end %>
-        </td>
-      </tr>
+         </td>
+       </tr>
     <% end %>
+   </tr>
   </table>
- 
-</div>
+ </div>
 
+
+
+
+   

@@ -1,5 +1,5 @@
 class AttendancesController < ApplicationController
-  before_action :set_user, only: [:edit_one_month, :update_one_month,:overtime_application,:overtime_update ]
+  before_action :set_user, only: [:edit_one_month, :update_one_month,:overtime_application,:overtime_update,:overtime_log ]
   before_action :logged_in_user, only: [:update, :edit_one_month, ]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
   before_action :set_one_month, only: [:edit_one_month,  ]
@@ -56,13 +56,15 @@ class AttendancesController < ApplicationController
     end
 
     def overtime_log
-       @attendance = Attendance.find(params[:id])
-    end  
+        @attendance = Attendance.find(params[:id])
+    end
+   
    
     def overtime_log_update
        @attendance = Attendance.find(params[:id])
+      
        flash[:pink] = "Applied for overtime"
-        redirect_to @user
+        redirect_to @user 
     end
    
 

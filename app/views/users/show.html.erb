@@ -35,7 +35,7 @@
   
   <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>
   <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
-  <%= link_to "勤怠ログ",attendances_overtime_log_update_user_path, class: "btn btn-primary" %>
+  <%= link_to "勤怠ログ", attendances_overtime_log_user_path, remote: true,class: "btn btn-primary" %>
   
 </div>
 
@@ -169,5 +169,4 @@
   
 <!--モーダルウインドウ表示-->
 <div id="overtime-application" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-<div id="overtime-log" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-
+        <div id="overtime-log" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

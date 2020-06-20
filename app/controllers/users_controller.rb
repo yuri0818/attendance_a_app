@@ -1,27 +1,35 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info,:import]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info,:import]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
   before_action :set_one_month, only: :show
 
-  def index
+    def index
     @users = User.paginate(page: params[:page])
-  end
+    respond_to do |format|
+        format.html do
+            #html用の処理を書く
+        end 
+        format.csv do
+           send_data render_to_string, filename: "csv", type: :csv #csv用の処理を書く
+       end
+      end
+     end
 
-  def show
+   def show
      @worked_sum = @attendances.where.not(started_at: nil).count
      @first_day = Date.current.beginning_of_month
      @last_day = @first_day.end_of_month
       respond_to do |format|
         format.html do
             #html用の処理を書く
-        end 
+      end 
         format.csv do
            send_data render_to_string, filename: "勤怠A.csv", type: :csv #csv用の処理を書く
-        end
-    end
-  end
+       end
+      end
+   end
 
   def new
     @user = User.new
@@ -60,16 +68,18 @@ class UsersController < ApplicationController
   end
 
   def update_basic_info
-    if @user.update_attributes(basic_info_params)
+    if @user.update_attributes(user_params)
       flash[:success] = "#{@user.name}の基本情報を更新しました。"
     else
       flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
     end
     redirect_to users_url
   end
+  
     
-
-
+     
+  
+     
   private
 
     def user_params
@@ -79,5 +89,4 @@ class UsersController < ApplicationController
     def basic_info_params
       params.require(:user).permit(:department, :basic_time, :work_time)
     end
-
-end
+end 

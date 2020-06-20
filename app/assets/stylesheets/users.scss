@@ -85,7 +85,7 @@
 
 
 .btn-btn-from:hover {
-   color:blue;
+   color:white;
 }  
 
 .modal-title{
@@ -95,8 +95,8 @@
 
 
 .btn-btn-primary{
-  font-family:'Homemade Apple', cursive;
-  color:deepskyblue;
+  color:deeppink;
+  background-color:white;
 }
 
 /* ユーザー情報テーブル */
@@ -123,4 +123,52 @@ h1 {
   font-size: 1em;
    font-family:'Homemade Apple', cursive;
   color:aqua;
+}
+
+.alert-success {
+    color:deeppink;
+    background-color:pink;
+    border-color:pink;
+}  
+
+
+  
+.label-overtime_log {
+  margin-top: 5px;
+}
+
+.btn-overtime_log {
+  margin: 15px 0;
+  width: 30%;
+}
+
+.btn-info{
+  color:white;
+  background-color:aqua;
+  border-color:white;
+}
+
+.btn-info:hover{
+  color:pink;
+  background-color:aqua;
+   border-color:white;
+}  
+
+.btn-circle-fishy {
+  display: inline-block;
+  text-decoration: none;
+  color: #FFF;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  border-radius: 50%;
+  text-align: center;
+  overflow: hidden;
+  background-image: linear-gradient(45deg, #709dff 0%, #91fdb7 100%);
+  transition: .4s;
+}
+
+.btn-circle-fishy:hover {
+  -webkit-transform: rotate(10deg);
+  transform: rotate(10deg);
 }
