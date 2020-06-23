@@ -1,3 +1,4 @@
+ 
   <%= form_with(model: user,url: update_basic_info_user_path(user.id), local: true, method: :patch) do |f| %>
  
   <%= f.label :name, class: "label-#{yield(:class_text)}" %>
@@ -9,11 +10,27 @@
   <%= f.label :department, class: "label-#{yield(:class_text)}" %>
   <%= f.text_field :department, class: "form-control" %>
 
+　<%= f.label :employee_number, "社員番号"%> 
+　<%= f.number_field :employee_number, class: 'form-control' %>
+
+  <%= f.label :uid, "カードID"%>
+  <%= f.text_field :uid, class: 'form-control' %>
+
+　<%= f.label :basic_work_time, "基本勤務時間" %>
+  <%= f.time_field :basic_work_time, class: 'form-control' %>
+
+  <%= f.label :designated_work_start_time, "指定勤務開始時間" %>
+  <%= f.time_field :designated_work_start_time, class: 'form-control' %>
+
+  <%= f.label :designated_work_end_time, "指定勤務終了時間" %>
+　<%= f.time_field :designated_work_end_time, class: 'form-control' %>
+
+  <%= @user %>
+
   <%= f.label :password, class: "label-#{yield(:class_text)}" %>
   <%= f.password_field :password, class: "form-control" %>
 
-  <%= f.label :password_confirmation, class: "label-#{yield(:class_text)}" %>
-  <%= f.password_field :password_confirmation, class: "form-control" %>
-
+  <%= @user %>
+  
   <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
   <% end %>

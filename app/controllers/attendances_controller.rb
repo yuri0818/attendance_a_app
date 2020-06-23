@@ -28,12 +28,12 @@ class AttendancesController < ApplicationController
 
   def edit_one_month
   end
-
+  
   def update_one_month
     ActiveRecord::Base.transaction do # トランザクションを開始します。
       attendances_params.each do |id, item|
         attendance = Attendance.find(id)
-        !(item)
+        attendance.update_attributes!(item)
       end
     end
     flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
@@ -43,7 +43,6 @@ class AttendancesController < ApplicationController
     redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
-  
     def overtime_application
        @attendance = Attendance.find(params[:day])
     end
@@ -51,7 +50,7 @@ class AttendancesController < ApplicationController
     
     def overtime_update
        @attendance = Attendance.find(params[:id])
-       flash[:pink] = "Applied for overtime"
+       flash[:deeppink] = "Applied for overtime"
         redirect_to @user
     end
 
