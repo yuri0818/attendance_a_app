@@ -78,6 +78,7 @@ class UsersController < ApplicationController
   
   def attendance_index
    @users = User.all.includes(:attendances)
+   Attendance.where.not(started_at: nil)
   end
     
      

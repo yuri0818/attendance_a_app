@@ -61,7 +61,6 @@ class AttendancesController < ApplicationController
    
     def overtime_log_update
        @attendance = Attendance.find(params[:id])
-      
        flash[:pink] = "Applied for overtime"
         redirect_to @user 
     end
