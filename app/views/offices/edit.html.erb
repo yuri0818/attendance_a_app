@@ -1,0 +1,24 @@
+<% provide(:title, "office-edit") %>
+<h1 class = "Office Edit">Office Edit</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @office, url: office_path(@office), local: true, method: :patch) do |f| %>
+
+      <%= f.label :office_name, "拠点名"  %>
+      <%= f.text_field :office_name, class: 'form-control' %>
+
+      <%= f.label :office_number, "拠点番号"  %>
+      <%= f.number_field :office_number, class: 'form-control' %>
+
+      <%= f.label :office_type,"拠点種類" %>
+      <%= f.text_field :office_type, class: 'form-control' %>
+       
+      <%= f.submit "拠点編集", class: "btn btn-primary btn-block " %>
+      
+      
+      
+      
+    <% end %>
+  </div>
+</div>

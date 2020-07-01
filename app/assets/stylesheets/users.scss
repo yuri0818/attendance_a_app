@@ -177,3 +177,23 @@ h1 {
   color:navy;
   
 }
+/*ユーザー一覧削除ボタン */
+
+.btn-info {
+    color:white;
+    background-color: blue;
+    border-color: #ac2925;
+}    
+
+/*       */
+.btn-default {
+    color:aqua;
+    background-color:white;
+    border-color:pink;
+}  
+
+.btn-default:hover {
+    color:aqua;
+    background-color:blue;
+    border-color:pink;
+}

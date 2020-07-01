@@ -43,7 +43,7 @@
           　 <% if current_user.admin? && !current_user?(user) %>
             
              <%= link_to "削除", user, method: :delete,
-              data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger" %>
+              data: { confirm: "削除してよろしいですか？" }, class: "btn btn-info" %>
           <button type ="button" class = "btn btn-primary" data-toggle="collapse" data-target="#<%= user.id %>">編集</button>
           <div id = "<%= user.id %>" class = "collapse" >
            <%= render partial: 'formA', locals: {user: user} %>

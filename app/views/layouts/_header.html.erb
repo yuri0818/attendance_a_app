@@ -28,6 +28,7 @@
               <li><%= link_to "基本情報の修正", edit_basic_info_user_path(current_user) %></li>
                <li><%= link_to "ユーザー一覧", users_path %></li>
                <li><%= link_to "出勤中社員一覧", attendance_index_user_path(current_user) %></li>
+               <li><%= link_to "拠点情報の編集",offices_path %></li>
          <% else %>
         
           <% end %>

@@ -32,22 +32,22 @@
            <th>変更後出社時間</th>
            <th>指示者</th>
            <th>承認者</th>
-        </tr>
+     
           <tr>
           
            <td><%= l(@attendance.worked_on, format: :short) %></td>
           
-           <td></td>
+           <td><%= f.time_field:before_started_at , class: "form-control"%></td>
        
-           <td></td>
+           <td><%= f.time_field:before_finished_at , class: "form-control" %></td>
            
-           <td></td>
+           <td><%= f.time_field:change_started_at , class: "form-control"%></td>
            
-           <td></td>
+           <td><%= f.time_field:change_finished_at , class: "form-control"%></td>
            
-       　　  <td></td>
+         　<td></td>
          
-      　　   <td></td>
+      　  　<td></td>
         
          </tr>
        </table>
