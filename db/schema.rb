@@ -19,25 +19,20 @@ ActiveRecord::Schema.define(version: 20200625044955) do
     t.string "note"
     t.boolean "tomorrow"
     t.datetime "scheduled_end_time"
-    t.datetime "designation_started_at"
-    t.datetime "designation_finished_at"
     t.datetime "before_started_at"
     t.datetime "before_finished_at"
     t.datetime "change_started_at"
     t.datetime "change_finished_at"
-    t.string "instructor"
-    t.string "authorizer"
     t.string "business_content"
-    t.string "instructo_mark"
-    t.string "overtime_app"
-    t.string "overtime_app_approval"
-    t.string "overtime_edit_app"
-    t.string "overtime_edit_approval"
-    t.string "month_app"
-    t.string "month_app_app"
-    t.string "overtime_app_authorizer"
-    t.string "overtime_edit_app_authorizer"
-    t.string "month_app_app_authorizer"
+    t.string "instructor_mark"
+    t.string "change"
+    t.string "overtime_status"
+    t.string "edit_status"
+    t.string "month_status"
+    t.string "overtime_authorizer"
+    t.string "edit_authorizer"
+    t.string "month_authorizer"
+    t.date "apporoval_date"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -55,17 +50,18 @@ ActiveRecord::Schema.define(version: 20200625044955) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
+    t.string "affiliation"
     t.string "employee_number"
     t.string "uid"
-    t.time "day"
+    t.time "basic_work_time", default: "2000-01-01 23:00:00"
+    t.time "designation_started_at", default: "2000-01-01 00:00:00"
+    t.time "designation_finished_at", default: "2000-01-01 09:00:00"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "remember_digest"
     t.boolean "admin", default: false
-    t.string "department"
-    t.datetime "basic_time", default: "2020-06-29 23:00:00"
-    t.datetime "work_time", default: "2020-06-29 22:30:00"
+    t.boolean "superior", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

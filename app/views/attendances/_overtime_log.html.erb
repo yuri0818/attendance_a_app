@@ -9,14 +9,13 @@
         <span aria-hidden="true">&times;</span>
       </button>
      
-      <h1 class="modal-title">Overtime log</h1>
+      <h1 class="modal-title">&#x1F380;	  Overtime log   &#x1F380;</h1>
+      <h1 class= "user-name" ><%= @user.name %></h1>
     </div>
-    
-     <h1 class= user.name ><%= @user.name %></h1>
     
     <div class="modal-body">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-11 col-md-offset-1">
           
 
      <%= form_with(model: @attendance, url: attendances_overtime_log_update_user_path(@user), local: true, method: :patch) do |f| %>
@@ -45,9 +44,9 @@
            
            <td><%= f.time_field:change_finished_at , class: "form-control"%></td>
            
-         　<td></td>
+         　<td><%= f.text_field :authorizer, class: "form-control"%></td>
          
-      　  　<td></td>
+      　    <td><%= f.text_field :instructor , class: "form-control"%></td>
         
          </tr>
        </table>

@@ -8,10 +8,10 @@ CSV.generate do |csv|
       user.name,
       user.email,
       user.password_digest,
-      user.department,
-      user.basic_time,
-      user.work_time,
-      user.basic_time
+      user.affiliation,
+      user.basic_work_time,
+      user.designation_started_at,
+      user.designation_finished_at
     ]
     csv << column_values
   end

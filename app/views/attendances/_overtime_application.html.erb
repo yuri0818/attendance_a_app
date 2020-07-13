@@ -9,17 +9,16 @@
         <span aria-hidden="true">&times;</span>
       </button>
      
-      <h1 class="modal-title">Overtime application</h1>
+     <h1 class="modal-title">&#x1F338;   Superior infomecion  &#x1F338;</h1> 
+     <h1 class= "user-name"><%= @user.name %></h1>
+    
     </div>
-    
-     <h1 class= user.name ><%= @user.name %></h1>
-    
+     
     <div class="modal-body">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-9 col-md-offset-1">
           
-
-     <%= form_with(model: @attendance, url: attendances_overtime_update_user_path( @user), local: true, method: :patch) do |f| %>
+     <%= form_with(model: @attendance, url: attendances_overtime_update_user_path(@user), local: true, method: :patch) do |f| %>
      <%= render 'shared/error_messages', object: @attendance %>
 
        <table class="table table-bordered table-condensed table-hover" id="table-attendances">
@@ -40,11 +39,13 @@
        
            <td><%= f.check_box :tomorrow, id: "remember_me" %></td>
            
-           <td><%= f.time_field :scheduled_end_time, class: "form-control" %></td>
+           <td><%= f.time_select :scheduled_end_time, :include_blank => false, minute_step: 15 %></td>
            
            <td><%= f.text_field :business_content, class: "form-control" %></td>
            
-         <td><%= f.select :instructor, [["選択してください"],["上長A"],["上長B"]]%></td>
+           <td><%= f.collection_select :instructor_mark, @superior, :name, :name %></td>
+         
+        
         
          </tr>
        </table>

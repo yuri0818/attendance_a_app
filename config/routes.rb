@@ -18,6 +18,9 @@ Rails.application.routes.draw do
       get 'attendances/overtime_log'
       patch 'attendances/overtime_log_update'
       get  'attendance_index'
+      get 'attendances/superior_info'
+      patch 'attendances/superior_update'
+      get 'formC'
     end
     resources :attendances, only: :update
   end

@@ -9,19 +9,19 @@
       </td>
       <td>
         <div>
-          指定勤務開始時間 ：<%= format_basic_info(@user.work_time) %>
+          指定勤務開始時間 ：<%= format_basic_info(@user.designation_started_at) %>
           <br>
-          指定勤務終了時間：<%= format_basic_info(@user.work_time) %>　
+          指定勤務終了時間：<%= format_basic_info(@user.designation_finished_at) %>　
         </div>
        </td>
           
   
-      <td>基本時間：<%= format_basic_info(@user.basic_time) %></td>
+      <td>基本時間：<%= format_basic_info(@user.basic_work_time) %></td>
       <td>月初日：<%= l(@first_day, format: :short) %></td>
     </tr>
 
     <tr>
-      <td>所属：<%= @user.department.present? ? @user.department : "未所属" %></td>
+      <td>所属：<%= @user.affiliation.present? ? @user.affiliation : "未所属" %></td>
       <td>名前：<%= @user.name %></td>
       <td>出勤日数：<%= @worked_sum %>日</td>
       <td>月末日：<%= l(@last_day, format: :short) %></td>
@@ -29,18 +29,25 @@
   </table>
 </div>
 
-  
+ 
 
 <div class="btn-users-show">
-  
-  <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>
+  <div>
+    <% if @overtime_count != 0 %>
+      <%= link_to "{残業申請のお知らせ}",attendances_superior_info_user_path(@user), remote: true,class: "btn-btn-from" %>
+      <%= "#{@overtime_count}の件のお知らせ" %>
+    <% else %>
+      {残業申請のお知らせ}
+    <% end %>
+  </div>
+  <div>
   <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
+  <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>
+  </div>
+  <div>
   <%= link_to "勤怠ログ", attendances_overtime_log_user_path, remote: true,class: "btn btn-primary" %>
-  
+  </div>
 </div>
-
-
-
 
 <div>
   <table class="table table-bordered table-condensed table-hover" id="table-attendances">
@@ -91,14 +98,14 @@
  
   <tr>
     <td class="center">
-    <%= link_to "残業申請",attendances_overtime_application_user_path(@user, day: day) , remote: true,class:"btn-btn-from" %>
+    <%= link_to "残業申請",attendances_overtime_application_user_path(@user, day: day) , remote: true,class: "btn-btn-from" %>
     </td>
     
     <td><%= l(day.worked_on, format: :short) %></td>
     
     <td class="<%= css_class %>"><%= $days_of_the_week[day.worked_on.wday] %></td>
    
-     
+    
     
     <td><%= format_hour(day.started_at) if day.started_at.present? %></td>
     <td><%= format_min(day.started_at) if day.started_at.present? %></td>
@@ -146,7 +153,7 @@
       </tr>
       <tr>
         <td colspan="3"><%= @attendances.count %></td>
-        <td colspan="6"><%= format_basic_info(@user.work_time).to_f * @worked_sum %></td>
+        <td colspan="6"><%= format_basic_info(@user.basic_work_time).to_f * @worked_sum %></td>
         <td colspan="1"><%= format("%.2f", @total_working_times.to_f) %></td>
       </tr>
       <tr></tr>
@@ -154,20 +161,22 @@
   </table>
 </div>
 
-  <div class = "pull right">
-    <table class="table table-bordered table-condensed ">
-      <td>
-        承認 <br>
-        <%= link_to "申請",class: "btn btn-block btn primary" %>
-        
-      </td>
-    </table>
-  </div>
   
   
+  
+  <form action="/users/4/attendances/397/update_month_request?date=2020-07-01" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="patch"><input type="hidden" name="authenticity_token" value="YpJ5ilHTUnmTxQFdzwuF7ERPF3jGN8cPtFIEWkZW+Bh5z9s17bqdeD3B3OAKls/jr3TzSMcxHTcjsFxPXz+/+A==">
+              所属長承認　未
+              <br><select name="attendance[month_superior_id]"><option value=""></option>
+<option value="2">上長１</option>
+<option value="3">上長２</option>
+<option value="6">sample1</option>
+<option value="7">sample2</option></select><br>
+              <input value="申請中" type="hidden" name="attendance[month_enum]">
+              <input type="submit" name="commit" value="申請" class="btn btn-primary" data-disable-with="申請">
+</form>
   
   
 <!--モーダルウインドウ表示-->
 <!--残業申請モーダルウインドウ表示--><div id="overtime-application" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-<!--勤怠ログモーダルウインドウ表示--><div id="overtime-log" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>-->-->
-<!--上長--><div id="superior" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<!--勤怠ログモーダルウインドウ表示--><div id="overtime-log" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<!--残業申請 上長--><div id="superior-info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

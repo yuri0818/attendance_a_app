@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 
    def show
      @worked_sum = @attendances.where.not(started_at: nil).count
+     @overtime_count = Attendance.where(instructor_mark: @user.name, overtime_status: "申請中").count
      @first_day = Date.current.beginning_of_month
      @last_day = @first_day.end_of_month
       respond_to do |format|
@@ -30,6 +31,11 @@ class UsersController < ApplicationController
        end
       end
    end
+ 
+  def import
+      User.import(params[:file])
+       redirect_to users_url
+  end
 
   def new
     @user = User.new
@@ -81,11 +87,15 @@ class UsersController < ApplicationController
       Attendance.where.not(started_at: nil)
   end
     
-     
+  
+  def status_info
+  end
+  
+  
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :department, :password, :password_confirmation, :uid, :employee_number )
+      params.require(:user).permit(:name, :email, :affiliation, :password, :password_confirmation, :uid, :employee_number )
     end
 
     def basic_info_params
