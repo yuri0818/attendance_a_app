@@ -1,0 +1,60 @@
+
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+     
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+     
+      <h1 class="modal-title"></h1> 
+      <h1 class= "user-name"><%= @user.name %>からの1か月申請</h1>
+    
+    </div>
+     
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-7 col-md-offset-3">
+          
+           <%= form_with(model:@user, url: attendances_notices_one_update_user_path(@user), local: true, method: :patch) do |f| %>
+            <% @notices_one_request.each do |id, attendances| %>
+             <% user = User.find(id) %>
+               <h1 class= "user-name-jyouchou" ><%= user.name %>からの申請</h1>
+      
+             <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+               <thead>
+                 <tr>
+                   <th>月</th>
+                   <th>指示者確認印</th>
+                   <th>変更</th>
+                   <th>勤怠を確認</th>
+                 </tr>
+               </thead>
+               <% attendances.each do |at| %>
+                 <%= f.fields_for "attendances[]", at do |t| %>
+                   <tbody>
+                     <tr>
+                    
+                       <td><%= l(at.worked_on, format: :middle) %></td>
+                      
+                       <td><%= t.select :month_status, ["なし","承認","否認","申請中"],{include_blank: true}, class: "form-control" %></td>
+                                         <!--一ヶ月申請の状態 -->
+                       <td><%= t.check_box :one_month_change, id: "remember_me" %></td>
+                     
+                                           <!--一ヶ月勤怠編集変更-->
+                       <td><%= link_to"確認",status_info_user_path(user), class: "btn btn-primary btn-form" %></td>
+                     
+                     </tr>
+                   </tbody>
+                 <% end %>
+               <% end %> 
+             </table>
+            <% end %>
+            <%= f.submit"変更を送信する", class: "btn btn-primary"%>
+           <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+							

@@ -5,16 +5,18 @@ class CreateAttendances < ActiveRecord::Migration[5.1]
       t.datetime :started_at
       t.datetime :finished_at
       t.string :note
-      t.boolean :tomorrow                 # 翌日   
+      t.boolean :tomorrow                 # 翌日(残業) 
+      t.boolean :change_tomorrow          # 翌日(編集用)勤怠
       t.datetime :scheduled_end_time      # 終了予定時間
       t.datetime :before_started_at       # 変更前出社時間
       t.datetime :before_finished_at      # 変更前退社時間
-      t.datetime :change_started_at       # 変更後出社時間
-      t.datetime :change_finished_at      # 変更後出社時間
+      t.datetime :change_started_at       # 編集用出社時間
+      t.datetime :change_finished_at      # 編集用退社時間
       t.string :business_content          # 業務処理内容
-      t.string :instructor_mark            # 指示者確認印
-      t.string :change                     # 変更
-                
+      t.string :instructor_mark           # 指示者確認印
+      t.string :overtime_change           # 残業申請変更
+      t.string :change                    # 勤怠編集変更
+      t.string :one_month_change          # 一ヶ月編集変更
       t.string :overtime_status           # 残業申請の状態
       t.string :edit_status               # 勤怠編集の状態　
       t.string :month_status              #一ヶ月申請の状態

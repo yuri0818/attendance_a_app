@@ -19,9 +19,13 @@
           
 
      <%= form_with(model: @user, url: attendances_superior_update_user_path(@user), local: true, method: :patch) do |f| %>
+         <!--"申請中"のovertime_status:を探して worked_on:の早い順に表示すためのインスタンス変数-->
+         <!--@overtime_request = Attendance.where(overtime_status: "申請中", 
+         overtime_authorizer: @user.name).order(user_id: "ASC", worked_on: "ASC").group_by(&:user_id) -->
+       
        <% @overtime_request.each do |id, attendances| %>
        <% user = User.find(id) %>
-         <h1 class= "user-name-jyouchou" ><%= user.name %></h1>
+         <h1 class= "user-name-jyouchou" ><%= user.name %>からの残業申請</h1>
 
        <table class="table table-bordered table-condensed table-hover" id="table-attendances">
          <thead>
@@ -47,24 +51,24 @@
               <td><%= $days_of_the_week[at.worked_on.wday] %></td>
              
               <td><%= l(at.scheduled_end_time,format: :time) %></td>
-              
+                 
               <td><%=  format_basic_info(user.designation_finished_at) %></td>
-              
-              <td><%=  over_times(at.tomorrow, at.scheduled_end_time, user.designation_finished_at) %></td>
+                                                 
+              <td><%=  over_times(at.tomorrow, at.scheduled_end_time, user.designation_finished_at, at.started_at) %></td>
                  
               <td><%= at.business_content %></td>
              
               <td><%= t.select :overtime_status, ["なし","承認","否認","申請中"],{include_blank: true}, class: "form-control" %></td>
             
-              <td><%= check_box :change, id: "remember_me" %></td>
+              <td><%= t.check_box :overtime_change, id: "remember_me" %></td>
               
-              <td><%=  %></td>
+              <td><%= link_to"確認",status_info_user_path(user), class: "btn btn-primary btn-form" %></td>
              </tr>
            </tbody>
            <% end %>
          <% end %> 
        </table>
-      
+      <% end %>
             <div class="center">
               <%= f.submit yield(:button_text), class: "btn btn-primary btn-#{yield(:class_text)}" %>
               <button type="button" class="btn btn-default btn-<%= yield(:class_text) %>" data-dismiss="modal">
@@ -72,7 +76,6 @@
               </button>
             </div>
             <% end %>
-          <% end %>
         </div>
       </div>
     </div>

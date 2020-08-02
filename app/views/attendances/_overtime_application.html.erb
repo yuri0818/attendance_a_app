@@ -18,7 +18,7 @@
       <div class="row">
         <div class="col-md-9 col-md-offset-1">
           
-     <%= form_with(model: @attendance, url: attendances_overtime_update_user_path(@user), local: true, method: :patch) do |f| %>
+     <%= form_with(model: @attendance, url: attendances_overtime_update_user_attendance_path(@user, @attendance), local: true, method: :patch) do |f| %>
      <%= render 'shared/error_messages', object: @attendance %>
 
        <table class="table table-bordered table-condensed table-hover" id="table-attendances">
@@ -30,7 +30,7 @@
       　    <th>終了予定時間</th>
            <th>業務処理内容</th>
            <th>指示者確認印</th>
-        </tr>
+        
           <tr>
           
            <td><%= l(@attendance.worked_on, format: :short) %></td>
@@ -42,9 +42,9 @@
            <td><%= f.time_select :scheduled_end_time, :include_blank => false, minute_step: 15 %></td>
            
            <td><%= f.text_field :business_content, class: "form-control" %></td>
-           
-           <td><%= f.collection_select :instructor_mark, @superior, :name, :name %></td>
-         
+           <!--誰宛てか？-->
+           <td><%= f.collection_select :overtime_authorizer, @superior, :name, :name %></td>
+            <!--  @superior = User.where(superior: true).where.not(id: @user.id)-->
         
         
          </tr>

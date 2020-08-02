@@ -1,10 +1,12 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info,:import,:attendance_index]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info,:import,:attendance_index,
+                                 :status_info, :overtime_log]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info,:import]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info,]
-  before_action :set_one_month, only: :show
-
+  before_action :set_one_month, only: [:show,:status_info]
+  before_action :superior_or_correct_user,only: :show
+   
     def index
     @users = User.paginate(page: params[:page])
      respond_to do |format|
@@ -19,9 +21,15 @@ class UsersController < ApplicationController
 
    def show
      @worked_sum = @attendances.where.not(started_at: nil).count
-     @overtime_count = Attendance.where(instructor_mark: @user.name, overtime_status: "申請中").count
-     @first_day = Date.current.beginning_of_month
-     @last_day = @first_day.end_of_month
+     #  残業申請カウント
+     @overtime_count = Attendance.where(overtime_authorizer: @user.name, overtime_status: "申請中").count 
+     #  勤怠申請カウント
+     @edit_status_count = Attendance.where(edit_authorizer: @user.name, edit_status: "申請中").count  
+     # 一ヶ月申請申請カウント
+     @month_status_count = Attendance.where(month_authorizer: @user.name, month_status: "申請中").count 
+     @superior = User.where(superior: true).where.not(id: @user.id)
+    # @first_day = Date.current.beginning_of_month
+    # @last_day = @first_day.end_of_month
       respond_to do |format|
         format.html do
             #html用の処理を書く
@@ -89,8 +97,25 @@ class UsersController < ApplicationController
     
   
   def status_info
+    @first_day = params[:date].nil? ?
+    Date.current.beginning_of_month : params[:date].to_date.beginning_of_month
+    @last_day = @first_day.end_of_month
+    @attendances = @user.attendances.where(worked_on: @first_day..@last_day).order(:worked_on)
+    @worked_sum = @attendances.where.not(started_at: nil).count
   end
-  
+   
+   def overtime_log
+     if params["year(1i)"].nil?
+        @first_day =  Date.current.beginning_of_month #該当月の初日
+     else 
+       select_day = params["year(1i)"] + "-" + 
+         format("%02d", params["month(2i)"]) + "-" + 
+         format("%02d", params["month(3i)"]) 
+       @first_day = select_day.to_date.beginning_of_month
+     end 
+     @last_day = @first_day.end_of_month
+     @attendances = @user.attendances.where(edit_status: "承認", worked_on: @first_day..@last_day).order(:worked_on)
+   end
   
   private
 

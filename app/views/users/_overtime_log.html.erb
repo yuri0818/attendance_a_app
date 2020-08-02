@@ -1,0 +1,65 @@
+<% provide(:class_text, 'overtime_log') %>
+<% provide(:button_text, 'update') %>
+
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+     
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+     
+      <h1 class="modal-title">&#x1F380;	  Overtime log   &#x1F380;</h1>
+      
+    </div>
+    
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+    
+    <%= form_with( url: overtime_log_user_path(@user), method: :get) do |f| %>
+     <p><%= f.submit 'リセット', class: 'btn btn-primary' %></p>
+     <p><%= f.date_select :year,{discard_month:true} %>
+        <%= f.date_select :month,{discard_year:true,discard_day:true, use_month_numbers:true} %></p>
+    <% end %>
+    
+    
+       <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+         <thead>
+          <tr>
+           <th>日付</th>
+           <th>変更前出社時間</th>
+      　    <th>変更前退社時間</th>
+      　    <th>変更後出社時間</th>
+           <th>変更後出社時間</th>
+           <th>指示者</th>
+           <th>承認日</th>
+          </tr>
+         </thead>
+      <% @attendances.each do |day| %>
+        <tbody>
+      
+          <tr>
+           <td><%= day.worked_on %></td>
+           
+           <td><%= day.before_started_at.strftime('%R') if day.before_started_at.present? %></td>
+       
+           <td><%= day.before_finished_at.strftime('%R') if day.before_finished_at.present? %></td>
+           
+           <td><%= day.started_at.strftime('%R') if day.started_at.present? %></td>
+           
+           <td><%= day.finished_at.strftime('%R') if day.finished_at.present? %></td>
+         
+            <td><%= day.edit_authorizer %></td>
+      　    
+            <td><%= day.apporoval_date.to_date %></td>
+        
+          </tr>
+        </tbody>
+           <% end %>
+       </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

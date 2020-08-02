@@ -5,7 +5,7 @@ CSV.generate do |csv|
   csv << csv_column_names
   @attendances.each do |day|
     csv_column_values = [
-      day.worked_on.wday,
+      day.worked_on,
       $days_of_the_week[day.worked_on.wday],
       if day.started_at.present?
         l(day.started_at, format: :time)
