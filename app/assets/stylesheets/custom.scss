@@ -86,9 +86,9 @@ p {
 /* cusutom-color */
 /* user_show 勤怠ログ　勤怠編集　CSV  */
 .btn-primary{
-    
+  text-align: center;
   color: pink;
-   border-color: aqua;
+  border-color: aqua;
   background-color:white;
 }
 
@@ -105,14 +105,14 @@ p {
 
 
 .navbar-inverse .navbar-nav > li > a :hover {
-  color: pink;
+  color: white;
    color:#a23089;
   text-decoration: none;
 }
 
 .navbar-inverse .navbar-nav > .open > a, 
 .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
-      color: pink;
+      color: white;
      background-color:navy; 
 }
 

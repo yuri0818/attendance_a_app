@@ -9,7 +9,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
      
-      <h1 class="modal-title-jyouchou">&#x1F34E;	  Overtime app info   &#x1F34E;</h1>
+      <h1 class="modal-title-jyouchou">&#x1F34E;  Superior infomecion 	&#x1F34E;</h1>
       
     </div>
     
@@ -25,7 +25,7 @@
        
        <% @overtime_request.each do |id, attendances| %>
        <% user = User.find(id) %>
-         <h1 class= "user-name-jyouchou" ><%= user.name %>からの残業申請</h1>
+         <h1 class= "user-name-jyouchou" >Overtime application from <%= user.name %></h1>
 
        <table class="table table-bordered table-condensed table-hover" id="table-attendances">
          <thead>

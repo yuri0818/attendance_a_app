@@ -1,7 +1,7 @@
 <% provide(:class_text, 'basic-info') %>
-<% provide(:button_text, '更新') %>
+<% provide(:button_text, 'update') %>
 
-<h1>基本情報の修正</h1>
+<h1>Correction of basic information</h1>
 
         <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -22,7 +22,7 @@
 
             <div class="center">
               <%= f.submit yield(:button_text), class: "btn btn-primary btn-#{yield(:class_text)}" %>
-                 <%= link_to "キャンセル", users_path, class: "btn btn-default" %>
+                 <%= link_to "cansel", users_path, class: "btn btn-default" %>
             </div>
           <% end %>
         </div>

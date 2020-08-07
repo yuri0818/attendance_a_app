@@ -5,6 +5,12 @@
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "ホーム", root_path %></li>
+        <% if logged_in? && current_user.admin? %>
+              <li><%= link_to "基本情報の修正", edit_basic_info_user_path(current_user) %></li>
+               <li><%= link_to "ユーザー一覧", users_path %></li>
+               <li><%= link_to "出勤中社員一覧", attendance_index_user_path(current_user) %></li>
+               <li><%= link_to "拠点情報の編集",offices_path %></li>
+          <% end %>
         <% if logged_in? %>
           
           <li class="dropdown">
@@ -24,12 +30,7 @@
           <li><%= link_to "ログイン", login_path %></li>
         <% end %>
         
-         <% if logged_in? && current_user.admin? %>
-              <li><%= link_to "基本情報の修正", edit_basic_info_user_path(current_user) %></li>
-               <li><%= link_to "ユーザー一覧", users_path %></li>
-               <li><%= link_to "出勤中社員一覧", attendance_index_user_path(current_user) %></li>
-               <li><%= link_to "拠点情報の編集",offices_path %></li>
-          <% end %>
+         
       </ul>
     </nav>
   </div>

@@ -1,11 +1,8 @@
 <% provide(:title, 'All Users') %>
 <% provide(:button_text, 'EDIT') %>
 <h1>USER INDEX</h1>
-
- <% if flash[:notice] %>
-  <div class="alert alert-info" role="alert"><%= flash[:notice] %></div>
- <% end %>
-
+ 
+<div class="filename-csv">Please enter the file name</div>
 
  <div>
   <%= form_tag import_users_path, multipart: true do  %>

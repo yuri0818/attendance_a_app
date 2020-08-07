@@ -1,5 +1,5 @@
 <% provide(:title, @user.name) %>
- 
+ <div class="admin-call">Thank you as always</div>
 <div>
 <% if !current_user.admin? %>
   <table class="table table-bordered table-condensed user-table">
@@ -10,11 +10,11 @@
       </td>
       <td>
         <div>
-          指定勤務開始時間 ：<%= format_basic_info(@user.designation_started_at) %>
+          指定勤務開始時間：<%= format_basic_info(@user.designation_started_at) %>
           <br>
           指定勤務終了時間：<%= format_basic_info(@user.designation_finished_at) %>　
         </div>
-       </td>
+      </td>
           
   
       <td colspan = "2">基本時間：<%= format_basic_info(@user.basic_work_time) %></td>
@@ -59,17 +59,13 @@
       <% else %>
         {勤怠申請のお知らせ}
       <% end %>
-    <% end %>
+      <% end %>
   </div>
-  <div>
+    <div>
     <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
     <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>
-  </div>
-  <div>
     <%= link_to "勤怠ログ",overtime_log_user_path(@user), remote: true,class: "btn btn-primary" %>
-  </div>
-</div>
-
+    </div>
 <div>
   <table class="table table-bordered table-condensed table-hover" id="table-attendances">
     <thead>

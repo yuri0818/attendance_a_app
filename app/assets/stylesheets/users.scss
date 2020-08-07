@@ -93,7 +93,8 @@
 }
 
 .user-name{
-  color:aqua;
+  font-family:'Homemade Apple', cursive;
+  color:deeppink;
 }
 
 .btn-btn-primary{
@@ -124,12 +125,13 @@ h1 {
 .alert{
   font-size: 2em;
   text-align:center
+  
 }
 
 .alert-success {
-    color:blue;
-    background-color:white;
-    border-color:blue;
+   color: blue;
+   background-color: white;
+   border-color: blue;
    font-family: 'Corben', cursive;
 }  
 
@@ -157,6 +159,7 @@ h1 {
 }  
 
 .btn-circle-fishy {
+  border-color:white;
   display: inline-block;
   text-decoration: none;
   color: #FFF;
@@ -200,3 +203,22 @@ h1 {
     border-color:pink;
 }
 
+/*overtime-app-modal-user-name*/ 
+.modal-title-user{
+  color:aqua;
+  font-family:'Homemade Apple', cursive;
+}
+
+/*admin-call*/
+.admin-call{
+  text-align: center;
+  color:blue;
+  font-size: 2em;
+  font-family:'Homemade Apple', cursive;
+}
+
+
+.filename-csv{
+  color:aqua;
+  font-family:'Homemade Apple', cursive;
+}

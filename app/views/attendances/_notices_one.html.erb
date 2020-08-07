@@ -8,7 +8,7 @@
       </button>
      
       <h1 class="modal-title"></h1> 
-      <h1 class= "user-name"><%= @user.name %>からの1か月申請</h1>
+      <h1 class= "user-name">Apply for 1 month </h1>
     
     </div>
      
@@ -19,7 +19,7 @@
            <%= form_with(model:@user, url: attendances_notices_one_update_user_path(@user), local: true, method: :patch) do |f| %>
             <% @notices_one_request.each do |id, attendances| %>
              <% user = User.find(id) %>
-               <h1 class= "user-name-jyouchou" ><%= user.name %>からの申請</h1>
+               <h1 class= "user-name-jyouchou" >Apply for 1 month from <%= user.name %></h1>
       
              <table class="table table-bordered table-condensed table-hover" id="table-attendances">
                <thead>
@@ -50,7 +50,7 @@
                <% end %> 
              </table>
             <% end %>
-            <%= f.submit"変更を送信する", class: "btn btn-primary"%>
+           <div class="notices"><%= f.submit"変更を送信する", class: "btn btn-primary"%></div>
            <% end %>
         </div>
       </div>

@@ -19,7 +19,7 @@
              <!--#  :edit_authorizer = 勤怠編集 承認者 -->
               <!--< @app_edit.each do |id, attendances|で一件申請したattendancesを回してる %>-->
               <% user = User.find(id) %>
-              <h1 class= "user-name-jyouchou" ><%= user.name %>からの勤怠申請</h1>
+              <h1 class= "user-name-jyouchou" >Attendance application from  <%= user.name %></h1>
               
               <table class="table table-bordered table-condensed table-hover" id="table-attendances">
                 <thead>
