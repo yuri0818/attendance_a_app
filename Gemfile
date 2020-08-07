@@ -88,6 +88,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 #  gem 'slim-rails'
   gem "jquery-rails"
+  gem 'roo'#csv 読み込み用
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

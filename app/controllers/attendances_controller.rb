@@ -5,10 +5,10 @@ class AttendancesController < ApplicationController
                                   :superior_update,:timetable_edit_update,
                                   :request_one_update,:notices_one,:notices_one_update]
   before_action :logged_in_user, only: [:update, :edit_one_month ]
-  before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
+  before_action :correct_user, only: [:update, :edit_one_month, :update_one_month]
   before_action :set_one_month, only: [:edit_one_month,  ]
 
-  UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
+  UPDATE_ERROR_MSG = "Attendance registration failed. Please try again."
 
     def update
     @user = User.find(params[:user_id])
@@ -16,13 +16,13 @@ class AttendancesController < ApplicationController
     # 出勤時間が未登録であることを判定します。
      if @attendance.started_at.nil?
        if @attendance.update_attributes(started_at: Time.current.change(sec: 0))
-         flash[:info] = "おはようございます！"
+         flash[:info] = "Good morning！"
        else
          flash[:danger] = UPDATE_ERROR_MSG
        end
      elsif @attendance.finished_at.nil?
       if @attendance.update_attributes(finished_at: Time.current.change(sec: 0))
-        flash[:info] = "お疲れ様でした。"
+        flash[:info] = "Thank you for your hard work"
       else
         flash[:danger] = UPDATE_ERROR_MSG
       end
@@ -36,25 +36,34 @@ class AttendancesController < ApplicationController
     end
   
     def update_one_month   # one_month_edit_params
-    ActiveRecord::Base.transaction do # トランザクションを開始します。　# 勤怠変更申請　社員側
+    n = 0
+    ActiveRecord::Base.transaction do # トランザクションを開始します。　# 勤怠変更申請　社員側 から 上長へupdate
       one_month_edit_params.each do |id, item|
+        if item[:edit_authorizer].blank? && item[:change_started_at].present? && item[:change_finished_at].present?  
+          flash[:danger] = "Please enter the name of the superior"
+          redirect_to  attendances_edit_one_month_user_url(date: params[:date]) and return
+        end
         if (item[:change_tomorrow] == "0") && (item[:change_started_at] > item[:change_finished_at])
-          flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+          flash[:danger] = "The update was canceled because there was invalid input data."
           redirect_to attendances_edit_one_month_user_url(date: params[:date]) and return
         end
-                # 状態カラム                       #   編集用出社時間                   #編集用退社時間
         if item[:edit_authorizer].present? && item[:change_started_at].present? && item[:change_finished_at].present?
           # 変更後の変更後出勤 退勤時間あれば更新可能
           attendance = Attendance.find(id)
           attendance.edit_status = "申請中" # ここで:edit_statusに"申請中" いれてshowで拾って@edit_status_countで表示
           attendance.update_attributes!(item)
+          n += 1 
         end
       end
     end
-      flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
-      redirect_to user_url(date: params[:date])
+    if n == 0 
+      flash[:success] = "There was no update"
+    else 
+      flash[:success] = "Updated one month's attendance information"
+    end 
+    redirect_to user_url(date: params[:date])
     rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
-      flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+      flash[:danger] = "The update was canceled because there was invalid input data."
       redirect_to attendances_edit_one_month_user_url(date: params[:date]) and return
     end
   
@@ -74,7 +83,7 @@ class AttendancesController < ApplicationController
         flash[:success] = "you applied for overtime " 
         redirect_to user_path @user
       else
-        flash[:danger] = "残業申請をキャンセルしました"
+        flash[:danger] = "Overtime application canceled"
         redirect_to user_path @user
       end
     end
@@ -87,6 +96,9 @@ class AttendancesController < ApplicationController
     end
     
     def superior_update                          # 残業申請 上長側  更新
+      n1 = 0
+      n2 = 0
+      n3 = 0
       ActiveRecord::Base.transaction do # トランザクションを開始します。
         superior_params.each do |id, item|
           if item[:overtime_change]  == "1"
@@ -96,37 +108,38 @@ class AttendancesController < ApplicationController
             　 item[:business_content] = nil
              　 item[:overtime_status] = nil
                item[:change]  = nil
-            if item[:overtime_status] == "否認"
-               flash[:success] = "申請を否認しました。"
-               redirect_to @user 
-              end 
-            end 
-            attendance = Attendance.find(id)
-            attendance.update_attributes!(item)
+               n1 +=  1  # n1 = n1 + 1 
+            elsif item[:overtime_status] == "承認"
+               n2 +=  1
+            elsif item[:overtime_status] == "否認"
+               n3 +=  1
+            end
           end 
-        end
-     end
-     flash[:success] = "残業申請を更新しました。"
-     redirect_to @user
+          attendance = Attendance.find(id)
+          attendance.update_attributes!(item)
+        end 
+      end
+      flash[:success] = "残業申請を#{n1}件なし、#{n2}件承認、#{n3}件否認しました"
+      redirect_to @user
     rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
-      flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+      flash[:danger] = "The update was canceled because there was invalid input data."
       redirect_to @user
     end 
 
     def timetable_edit  # 勤怠変更申請   上長側 表示
-      @user = User.find(params[:id])
-      @app_edit = Attendance.where(edit_status: "申請中", edit_authorizer: @user.name).
-      order(user_id: "ASC", worked_on: "ASC").group_by(&:user_id) 
-      #  Attendance.where(edit_status: "申請中"で見つけてくれて表示できる
-      #  :edit_authorizer  @user.name).でログインしているuserが上長の場合AかBを表示
-      #  :edit_authorizer = 勤怠編集 承認者 
+       @user = User.find(params[:id])
+       @app_edit = Attendance.where(edit_status: "申請中", edit_authorizer: @user.name).
+       order(user_id: "ASC", worked_on: "ASC").group_by(&:user_id) 
+       #  Attendance.where(edit_status: "申請中"で見つけてくれて表示できる
+       #  :edit_authorizer  @user.name).でログインしているuserが上長の場合AかBを表示
+       #  :edit_authorizer = 勤怠編集 承認者 
     end
   
     def timetable_edit_update            # 勤怠変更申請  上長側  更新
       ActiveRecord::Base.transaction do # トランザクションを開始します。
         timetable_edit_params.each do |id, item|
-          if (item[:change_tomorrow] == "0") && (item[:change_started_at] > item[:change_finished_at])
-            flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+          if (item[:change_tomorrow] == "0") && (item[:change_started_at] > item[:change_finished_at]) &&
+            flash[:danger] = "The update was canceled because there was invalid input data."
             redirect_to @user and return
           end
           attendance = Attendance.find(id)
@@ -154,15 +167,19 @@ class AttendancesController < ApplicationController
           end 
         end
      end
-     flash[:success] = "勤怠変更申請を更新しました。"
+     flash[:success] = "Updated overtime application."
      redirect_to @user
     rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
-      flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+      flash[:danger] = "The update was canceled because there was invalid input data."
       redirect_to @user and return
     end 
     
     def request_one_update   # 一ヶ月申請  社員 から 上長へupdate
      #一日分を拾う　：dayはパラメーターの名前　show viewで
+      if params[:user][:month_authorizer].blank? 
+         flash[:danger] = "Please enter the name of the superior"
+         redirect_to @user and return
+      end   
       @attendance = @user.attendances.find_by(worked_on: params[:user][:day])
       # ここで:edit_statusに"申請中"をいれてshowで拾って@overtime_countで表示
       params[:user][:month_status] = "申請中" 
@@ -170,7 +187,7 @@ class AttendancesController < ApplicationController
         flash[:success] = "you applied for application one_month " 
         redirect_to user_path @user
       else
-        flash[:danger] = "一ヶ月申請をキャンセルしました"
+        flash[:danger] = "Canceled application for a month"
         redirect_to user_path @user
       end
     end
@@ -194,10 +211,10 @@ class AttendancesController < ApplicationController
           end 
         end
       end
-      flash[:success] = "一ヶ月変更申請を更新しました。"
+      flash[:success] = "Updated application for one month"
       redirect_to @user
     rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
-      flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+      flash[:danger] = "The update was canceled because there was invalid input data."
       redirect_to @user
     end
    
@@ -254,12 +271,7 @@ class AttendancesController < ApplicationController
                                                   :edit_status ])[:attendances]  # 状態カラム
      end
      
-     # 一ヶ月申請  社員 から 上長へupdate?
-     def request_one_params
-      params.require(:user).permit(attendances: [:started_at,
-                                                 :finished_at,
-                                                 :note])[:attendances]
-     end
+    
     
       # 一ヶ月申請  社員 から 上長へupdate
      def notices_one_params 

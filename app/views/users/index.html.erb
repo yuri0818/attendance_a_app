@@ -8,15 +8,15 @@
 
 
  <div>
-  <%= form_tag users_path, method: :post, multipart: true do |f| %>
+  <%= form_tag import_users_path, multipart: true do  %>
     <div class="search_item">
       <%= text_field_tag 'filename',"", id: "filename", disabled: true %>
-      <%= file_field_tag 'emails_file', id: "file_input", style: "display: none;", onchange: "file_selected($(this));" %>
+      <%= file_field_tag :file, id: "file_input", style: "display: none;", onchange: "file_selected($(this));" %>
       <%= button_tag 'File select', class: %i(btn-primary csv_input_btn), type: 'button', onclick: "$('#file_input').click();" %>
     </div>
     
     <div>
-      <%= link_to "CSV", users_path(format: :csv), class: "btn-circle-fishy" %>
+      <%= submit_tag "CSV", class: "btn-circle-fishy" %>
     </div>
   <% end %>
  </div>

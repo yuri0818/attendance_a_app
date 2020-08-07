@@ -4,10 +4,6 @@
 <% if !current_user.admin? %>
   <table class="table table-bordered table-condensed user-table">
     <tr>
-      <td> <%= link_to "⇦ 前月へ", user_path(date: @first_day.prev_month), class: "btn btn-info" %>
-         【<%= l(@first_day, format: :middle) %>】時間管理表
-           <%= link_to "次月へ ⇨", user_path(date: @first_day.next_month), class: "btn btn-info" %>
-      </td>
       <td>
         <div>
           指定勤務開始時間 ：<%= format_basic_info(@user.designation_started_at) %>

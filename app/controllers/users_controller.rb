@@ -1,23 +1,15 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info,:import,:attendance_index,
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info,:attendance_index,
                                  :status_info, :overtime_log]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info,:import]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info,]
+  before_action :admin_user, only: [:index,:destroy, :edit_basic_info, :update_basic_info,]
   before_action :set_one_month, only: [:show,:status_info]
   before_action :superior_or_correct_user,only: :show
    
     def index
     @users = User.paginate(page: params[:page])
-     respond_to do |format|
-        format.html do
-            #html用の処理を書く
-     end 
-        format.csv do
-           send_data render_to_string, filename: "csv", type: :csv #csv用の処理を書く
-        end
-      end
-     end
+    end
 
    def show
      @worked_sum = @attendances.where.not(started_at: nil).count
@@ -33,10 +25,10 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.html do
             #html用の処理を書く
-      end 
+        end 
         format.csv do
            send_data render_to_string, filename: "勤怠A.csv", type: :csv #csv用の処理を書く
-       end
+        end
       end
    end
  
@@ -53,7 +45,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      flash[:success] = '新規作成に成功しました。'
+      flash[:success] = 'Successfully created new'
       redirect_to @user
     else
       render :new
@@ -65,7 +57,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      flash[:success] = "ユーザー情報を更新しました。"
+      flash[:success] = "Updated user information."
       redirect_to @user
     else
       render :edit      
@@ -74,7 +66,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    flash[:success] = "#{@user.name}のデータを削除しました。"
+    flash[:success] = "#{@user.name}Deleted the data."
     redirect_to users_url
   end
 
@@ -83,7 +75,7 @@ class UsersController < ApplicationController
 
   def update_basic_info
     if @user.update_attributes(user_params)
-      flash[:success] = "#{@user.name}の基本情報を更新しました。"
+      flash[:success] = "#{@user.name}Updated basic information"
     else
       flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
     end

@@ -28,7 +28,6 @@ class ApplicationController < ActionController::Base
   # システム管理権限所有かどうか判定します。
   def admin_user
     redirect_to root_url unless current_user.admin?
-    flash[:danger] = "You do not have edit permission."
   end
 
   # ページ出力前に1ヶ月分のデータの存在を確認・セットします。
@@ -56,7 +55,7 @@ class ApplicationController < ActionController::Base
   def superior_or_correct_user
       @user = User.find(params[:user_id]) if @user.blank?
       unless current_user?(@user) || current_user.superior?
-        flash[:danger] = "You do not have edit permission."
+        flash[:danger] = "You do not have edit permission.!"
         redirect_to(root_url)
       end  
   end 
@@ -69,6 +68,7 @@ class ApplicationController < ActionController::Base
         redirect_to(root_url)
       end  
   end 
+  
   
   
 end
