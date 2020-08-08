@@ -5,7 +5,7 @@ class AttendancesController < ApplicationController
                                   :superior_update,:timetable_edit_update,
                                   :request_one_update,:notices_one,:notices_one_update]
   before_action :logged_in_user, only: [:update, :edit_one_month ]
-  before_action :correct_user, only: [:update, :edit_one_month, :update_one_month]
+  # before_action :correct_user, only: [:update, :edit_one_month, :update_one_month]
   before_action :set_one_month, only: [:edit_one_month,  ]
 
   UPDATE_ERROR_MSG = "Attendance registration failed. Please try again."
@@ -114,9 +114,9 @@ class AttendancesController < ApplicationController
             elsif item[:overtime_status] == "否認"
                n3 +=  1
             end
-          end 
-          attendance = Attendance.find(id)
-          attendance.update_attributes!(item)
+            attendance = Attendance.find(id)
+            attendance.update_attributes!(item)
+          end
         end 
       end
       flash[:success] = "残業申請を#{n1}件なし、#{n2}件承認、#{n3}件否認しました"
@@ -156,12 +156,12 @@ class AttendancesController < ApplicationController
              attendance.apporoval_date = Date.current
            end
            if item[:edit_status] == "なし"   #  残業申請の状態
-             　 item[:started_at] = nil        #  出社時間
-            　  item[:finished_at] = nil       #  退社時間
-            　 item[:note] = nil              #  備考
-             　 item[:change_started_at] = nil # 編集用出社時間
-               item[:change_finished_at]  = nil # 編集用退社時間
-               item[:edit_authorizer]  = nil   #  残業申請 承認者
+               item[:started_at] = nil      #  出社時間
+               item[:finished_at] = nil      #  出社時間
+               item[:note] = nil 
+               item[:change_started_at] = nil 
+               item[:change_finished_at] = nil 
+               item[:edit_authorizer] = nil 
            end 
             attendance.update_attributes!(item)
           end 

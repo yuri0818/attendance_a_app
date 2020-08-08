@@ -1,5 +1,5 @@
 <% provide(:title, @user.name) %>
- <div class="admin-call">Thank you as always</div>
+ <div class="admin-call">&#x1F423; Thank you as always &#x1F423; </div>
 <div>
 <% if !current_user.admin? %>
   <table class="table table-bordered table-condensed user-table">
@@ -121,14 +121,14 @@
         <td><%= format_min(day.started_at) if day.started_at.present? %></td>
         <td>
           <% if btn_text = attendance_state(day) && day.started_at.blank? %>
-            <%= link_to "出勤登録", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+            <%= link_to "出勤登録",user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
           <% end %>
         </td>
         <td><%= format_hour(day.finished_at) if day.finished_at.present? %></td>
         <td><%= format_min(day.finished_at) if day.finished_at.present? %></td>
         <td>
           <% if btn_text = attendance_state(day) && day.started_at.present? &&  day.finished_at.blank? %>
-            <%= link_to "退勤登録", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+            <%= link_to "退勤登録",user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
           <% end %>
         </td>
         <!--<td></td>-->

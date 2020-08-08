@@ -3,10 +3,10 @@ class UsersController < ApplicationController
                                  :status_info, :overtime_log]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info,:import]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:index,:destroy, :edit_basic_info, :update_basic_info,]
+  before_action :admin_user, only: [:index,:destroy, :edit_basic_info, :update_basic_info,:attendance_index]
   before_action :set_one_month, only: [:show,:status_info]
   before_action :superior_or_correct_user,only: :show
-   
+  before_action :admin_or_correct_user,only: :show 
     def index
     @users = User.paginate(page: params[:page])
     end

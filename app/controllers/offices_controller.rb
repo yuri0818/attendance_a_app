@@ -1,7 +1,8 @@
 class OfficesController < ApplicationController
    
   before_action :set_office, only: [ :edit, :update, :destroy,:update]
-  
+  before_action :admin_user, only: :index
+   
    def index
      @offices = Office.all 
      @office = Office.new
